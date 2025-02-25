@@ -3,6 +3,8 @@ from tkinter import messagebox
 from tkinter import ttk
 import tkinter as tk
 from PIL import Image
+import os
+import sys
 
 mode_theme = "dark"
 def changer_theme():
@@ -271,9 +273,17 @@ def main_ui():
     root = ctk.CTk()
     root.title("Calcul de note inconnue")
     
-    # Charger les images avec Pillow
-    lune_image =  Image.open("assets/soleil.png") # Remplace par ton image de lune
-    soleil_image = Image.open("assets/lune.png")   # Remplace par ton image de soleil
+    def get_resource_path(relative_path):
+        """ Obtenir le chemin absolu pour les ressources. """
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
+    lune_image =Image.open(get_resource_path("assets/soleil.png"))
+    soleil_image =Image.open(get_resource_path("assets/lune.png")) 
 
     # Créer des icônes CTkImage à partir des images Pillow
     lune_icon = ctk.CTkImage(light_image=lune_image, dark_image=lune_image)  # Utiliser la même image pour les modes clair et sombre
